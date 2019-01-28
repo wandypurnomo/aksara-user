@@ -1,0 +1,41 @@
+{
+    "name": "aksara/user",
+    "description": "User and role manager for Aksara",
+    "type": "aksara-module",
+    "require-dev": {
+        "phpunit/phpunit": "^7.0",
+        "fzaninotto/faker": "^1.7"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Arseto Nugroho",
+            "email": "seto@tonjoo.com"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://128.199.88.234:8181"
+        }
+    ],
+    "require": {
+        "aksara/module-installer-plugin": "^0.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Plugins\\User\\": "src/"
+        },
+        "files": [
+            "src/helper.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Aksara\\": "../../aksara/src/"
+        }
+    },
+    "config": {
+        "secure-http": false
+    }
+}

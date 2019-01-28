@@ -1,0 +1,38 @@
+<?php
+
+return [
+    'all_user' => 'Semua Pengguna',
+    'user_list' => 'Daftar Pengguna',
+    'add_user' => 'Tambah Pengguna',
+    'edit_user' => 'Ubah Pengguna',
+    'delete_user' => 'Hapus Pengguna',
+    'edit_profile' => 'Ubah Profile',
+    'search' => 'Cari',
+    'user_name' => 'Nama',
+    'email' => 'Email',
+    'all' => 'Semua',
+    'active' => 'Aktif',
+    'inactive' => 'Non Aktif',
+    'edit' => 'Ubah',
+    'delete' => 'Hapus',
+    'create' => 'Buat',
+    'update' => 'Ubah',
+    'bulk_action' => 'Aksi Massal',
+    'apply' => 'Terapkan',
+    'password' => 'Password',
+    'password_confirmation' => 'Konfirmasi Password',
+    'cancel' => 'Batal',
+    'add_user_role' => 'Tambah Peran Pengguna',
+    'remove_user_role' => 'Hapus Peran Pengguna',
+    'action' => 'Aksi',
+
+    'role_list' => 'Daftar Peran',
+    'all_roles' => 'Semua Peran',
+    'add_role' => 'Tambah Peran',
+    'edit_role' => 'Ubah Peran',
+    'delete_role' => 'Hapus Peran',
+    'update_role' => 'Ubah Peran',
+    'role_name' => 'Nama Peran',
+
+    'profile_picture' => 'Foto Profil',
+];
