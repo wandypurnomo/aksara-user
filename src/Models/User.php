@@ -4,7 +4,7 @@ namespace Plugins\User\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Notifications\ResetPassword;
+use Plugins\User\Notifications\ResetPassword;
 use Aksara\Extensions\Laravel\Relations\Traits\PivotEventTrait;
 
 class User extends Authenticatable
