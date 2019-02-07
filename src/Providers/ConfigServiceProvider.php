@@ -8,7 +8,6 @@ class ConfigServiceProvider extends AbstractModuleProvider
 {
     protected function safeRegister()
     {
-        $this->mergeConfigFrom(__DIR__.'/../../config/auth.php', 'auth');
+        $this->overrideConfigFrom(__DIR__.'/../../config/auth.php', 'auth');
     }
-
 }
