@@ -3,7 +3,7 @@
 namespace Plugins\User\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\User;
+use Plugins\User\Models\User;
 
 class UserMeta extends Model
 {
@@ -24,7 +24,7 @@ class UserMeta extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     // Function for delete user meta data

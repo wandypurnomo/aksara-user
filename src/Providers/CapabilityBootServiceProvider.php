@@ -54,7 +54,7 @@ class CapabilityBootServiceProvider extends AbstractModuleProvider
 
             $capabilityAfter = $role->permissions ?? [];
 
-            $currentRole = \App\Role::find($role->id);
+            $currentRole = \Plugins\User\Models\Role::find($role->id);
             $currentCapability = $currentRole->permissions ?? [];
 
             $removed = array_diff($currentCapability, $capabilityAfter);
@@ -69,7 +69,7 @@ class CapabilityBootServiceProvider extends AbstractModuleProvider
         });
 
         \Eventy::addAction('aksara.role.deleting', function ($role) {
-            $currentRole = \App\Role::find($role->id);
+            $currentRole = \Plugins\User\Models\Role::find($role->id);
             $capabilities = $currentRole->permissions ?? [];
             foreach ($capabilities as $capability) {
                 \CapabilityCache::flushCapability($capability);

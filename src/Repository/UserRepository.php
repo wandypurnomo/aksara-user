@@ -4,7 +4,7 @@ namespace Plugins\User\Repository;
 
 use Aksara\TableView\TableRepository;
 use Aksara\Support\EloquentRepository;
-use App\User;
+use Plugins\User\Models\User;
 
 class UserRepository
     extends EloquentRepository implements TableRepository

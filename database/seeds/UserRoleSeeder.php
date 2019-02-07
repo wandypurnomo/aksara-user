@@ -15,9 +15,9 @@ class UserRoleSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Model::unguard();
 
-        App\Role::truncate();
+        Plugins\User\Models\Role::truncate();
 
-        $role = App\Role::create([
+        $role = Plugins\User\Models\Role::create([
             'name' => 'Admin User',
             'permissions' => [
                 //manage user
@@ -42,9 +42,9 @@ class UserRoleSeeder extends Seeder
 
         $adminEmail = 'admin@gmail.com';
 
-        $user = App\User::where('email', $adminEmail)->first();
+        $user = Plugins\User\Models\User::where('email', $adminEmail)->first();
         if (!$user) {
-            $user = App\User::first();
+            $user = Plugins\User\Models\User::first();
         }
         if (!$user) {
             throw new \Exception("Admin user not found with email $adminEmail");

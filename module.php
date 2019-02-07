@@ -10,6 +10,7 @@ return [
         'Plugins\\User\\Providers\\RoleServiceProvider',
         'Plugins\\User\\Providers\\CapabilityServiceProvider',
         'Plugins\\User\\Providers\\CapabilityBootServiceProvider',
+        'Plugins\\User\\Providers\\ConfigServiceProvider',
     ],
 
     //Laravel Facade aliases defined in plugin

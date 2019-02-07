@@ -6,7 +6,7 @@ use Aksara\TableView\Controller\AbstractTableController;
 use Aksara\TableView\Controller\Concerns\HasDestroyAction;
 use Plugins\User\Repository\RoleUserRepository;
 use Plugins\User\Presenters\RoleUserTablePresenter;
-use App\User;
+use Plugins\User\Models\User;
 
 class RoleUserTable extends AbstractTableController
 {

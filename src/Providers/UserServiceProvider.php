@@ -1,4 +1,5 @@
 <?php
+
 namespace Plugins\User\Providers;
 
 use Aksara\Providers\AbstractModuleProvider;

@@ -8,7 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Plugins\User\Http\Controllers\RoleUserTable;
 use Plugins\User\Repository\RoleRepository;
 use Plugins\User\Repository\UserRepository;
-use App\Role;
+use Plugins\User\Models\Role;
 
 class UserForm
 {

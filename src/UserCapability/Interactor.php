@@ -2,7 +2,7 @@
 
 namespace Plugins\User\UserCapability;
 
-use App\User;
+use Plugins\User\Models\User;
 use Plugins\User\RoleCapability\RoleCapabilityInterface;
 use Aksara\Support\Strings;
 
