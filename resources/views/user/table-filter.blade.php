@@ -4,5 +4,5 @@
     <option value="{{ $status }}" {{ (strval($status) == $status_selected) ? 'selected="selected"'  : '' }}>{{ $desc }}</option>
   @endforeach
 </select>
-<input type="submit" class="btn btn-secondary" value=@lang('tableview.labels.filter')>
+<input type="submit" class="btn btn-secondary" value=@lang('aksara::tableview.labels.filter')>
 
