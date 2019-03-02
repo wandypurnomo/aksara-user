@@ -16,11 +16,11 @@
     "repositories": [
         {
             "type": "composer",
-            "url": "http://128.199.88.234:8181"
+            "url": "https://aksara-repo-public.tongkolspace.com"
         }
     ],
     "require": {
-        "aksara/module-installer-plugin": "^0.1.0"
+        "aksara/module-installer-plugin": "^0.3.0"
     },
     "autoload": {
         "psr-4": {
