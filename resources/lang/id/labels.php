@@ -35,4 +35,6 @@ return [
     'role_name' => 'Nama Peran',
 
     'profile_picture' => 'Foto Profil',
+    'default-role' => 'Role Default',
+    'no-default-role' => 'Tidak ada role default',
 ];

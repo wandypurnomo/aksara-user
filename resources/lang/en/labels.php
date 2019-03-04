@@ -35,4 +35,6 @@ return [
     'role_name' => 'Role Name',
 
     'profile_picture' => 'Profile Picture',
+    'default-role' => 'Default Role',
+    'no-default-role' => 'No default role',
 ];

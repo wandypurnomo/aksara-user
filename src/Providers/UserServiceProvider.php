@@ -3,6 +3,8 @@
 namespace Plugins\User\Providers;
 
 use Aksara\Providers\AbstractModuleProvider;
+use Plugins\User\Models\Role;
+use Plugins\User\Models\User;
 
 class UserServiceProvider extends AbstractModuleProvider
 {
@@ -140,6 +142,28 @@ class UserServiceProvider extends AbstractModuleProvider
 
             add_admin_menu_toolbar_dropdown($args);
         },20);
+
+        \Eventy::addFilter('aksara.option.modules', function ($modules) {
+            $modules[] = 'user';
+            return $modules;
+        });
+
+        \Eventy::addAction('aksara.option.modules.user.render', function ($site_options) {
+            $roles = Role::orderBy('name')->pluck('name', 'id');
+            echo view('user::option.index', compact('roles', 'site_options'))->render();
+        });
+
+        \Eventy::addAction('aksara.auth-login-register.user-registered', function ($baseUser) {
+            $user = User::find($baseUser->id);
+            if (!$user) return;
+
+            $options = get_options('site_options', []);
+
+            if ($options && isset($options['default_role'])) {
+                $defaultRole = $options['default_role'];
+                $user->roles()->attach($defaultRole);
+            }
+        });
     }
 }
 
