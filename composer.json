@@ -20,7 +20,6 @@
         }
     ],
     "require": {
-        "aksara/module-installer-plugin": "^0.3.0"
     },
     "autoload": {
         "psr-4": {

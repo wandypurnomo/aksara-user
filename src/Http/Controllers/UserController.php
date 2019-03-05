@@ -127,7 +127,7 @@ class UserController extends Controller
             ]);
             $validator->validate();
 
-            $image = \FileUploader::handle($request, null, "profiles/$user->id/", 'profile_picture');
+            $image = \FileUploader::handle($request, null, "profiles/$user->id", 'profile_picture');
 
             set_user_meta($user->id, 'profile_picture', $image->getPath());
         } elseif ($request->input('profile_picture_deleted')) {

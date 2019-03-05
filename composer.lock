@@ -4,52 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1e2f5ee704d2fcde45d8d0400122cb15",
-    "packages": [
-        {
-            "name": "aksara/module-installer-plugin",
-            "version": "v0.3.0",
-            "source": {
-                "type": "git",
-                "url": "git@git.tonjoo.com:tonjoo/module-installer-plugin.git",
-                "reference": "1c9d1abc94942eced13f645cd36834714e2e052a"
-            },
-            "require": {
-                "composer-plugin-api": "^1.1"
-            },
-            "require-dev": {
-                "composer/composer": "^1.8",
-                "fzaninotto/faker": "^1.8",
-                "php-mock/php-mock-phpunit": "^2.1",
-                "phpunit/phpunit": "^7.5"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "Aksara\\Composer\\ModuleInstallerPlugin"
-            },
-            "autoload": {
-                "psr-4": {
-                    "Aksara\\Composer\\": "src"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "Aksara\\Composer\\": "tests"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Arseto Nugroho",
-                    "email": "seto@tonjoo.com"
-                }
-            ],
-            "description": "Composer plugin for aksara module installer",
-            "time": "2019-02-22T02:39:23+00:00"
-        }
-    ],
+    "content-hash": "1a6537d498e6f8907b3a98d2d49dae52",
+    "packages": [],
     "packages-dev": [
         {
             "name": "doctrine/instantiator",
