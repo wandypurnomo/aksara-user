@@ -133,4 +133,60 @@ class Interactor implements UserCapabilityInterface
     {
         return $this->userHasContext(\Auth::user(), $context);
     }
+
+    public function getUserCapabilities($userId)
+    {
+        $user = User::find($userId);
+        if (!$user) return [];
+
+        $capabilities = [];
+
+        foreach ($user->roles as $role) {
+            $permissions = $role->permissions;
+            foreach ($permissions as $permission) {
+                list($context, $capability) = explode('.', $permission);
+
+                //if explode only yields one value, use it as capability
+                //and set context to default: master
+                if (!$capability) {
+                    $capability = $context;
+                    $context = 'master';
+                }
+
+                $capabilities[$context][] = $capability;
+            }
+        }
+
+        return $capabilities;
+    }
+
+    public function getUserGroupedCapabilities($userId)
+    {
+        $capabilities = $this->getUserCapabilities($userId);
+
+        $grouped = [];
+
+        foreach ($capabilities as $context => $userCapabilities) {
+            $permissions = $this->roleCapability->allInContext($context);
+            $groupKeys = array_keys($permissions);
+            $groupedUserCapabilities = [];
+
+            foreach ($groupKeys as $groupKey) {
+                $groupPermission = $permissions[$groupKey];
+                $groupCapabilities = array_keys($groupPermission['capabilities']);
+
+                $intersection = array_intersect($userCapabilities, $groupCapabilities);
+
+                $groupedUserCapabilities[$groupKey] = array_values($intersection);
+            }
+
+            $grouped[$context] =  $groupedUserCapabilities;//grouping result
+        }
+        foreach ($grouped as $context => $groupedItems) {
+            if (!$groupedItems)
+                unset($grouped[$context]);
+        }
+
+        return $grouped;
+    }
 }

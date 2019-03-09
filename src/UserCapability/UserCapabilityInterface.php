@@ -11,4 +11,7 @@ interface UserCapabilityInterface
     public function hasCapability($capabilityId, $args = []);
     public function hasContextCapability($context, $capabilityId, $args = []);
     public function hasContext($context);
+
+    public function getUserCapabilities($userId);
+    public function getUserGroupedCapabilities($userId);
 }
