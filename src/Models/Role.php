@@ -4,9 +4,12 @@ namespace Plugins\User\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Plugins\User\Models\User;
+use Illuminate\Notifications\Notifiable;
 
 class Role extends Model
 {
+    use Notifiable;
+
     protected $table = 'roles';
     protected $fillable = ['name', 'permissions'];
     public $timestamps = false;
