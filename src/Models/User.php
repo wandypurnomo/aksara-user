@@ -71,8 +71,25 @@ class User extends Authenticatable
 
     public function roles()
     {
-        $roles = $this->belongsToMany(Role::class);
-        return $roles;
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function scopeHasRole($query, $roleId)
+    {
+        return $this->whereHas('roles', function ($roles) use ($roleId) {
+            $roles->where('id', $roleId);
+        });
+    }
+
+    public function scopeHasCapability($query, $capability, $context = null)
+    {
+        $context = $context ?? 'master';
+
+        return $this->whereHas('roles', function ($roles) use ($context, $capability) {
+            $roles->whereHas('permissions', function ($permissions) use ($context, $capability) {
+                $permissions->where('permission', $context.'.'.$capability);
+            });
+        });
     }
 
     public static function destroyUser($id)

@@ -50,30 +50,12 @@ class CapabilityBootServiceProvider extends AbstractModuleProvider
             \CapabilityCache::flushUser($userId);
         });
 
-        \Eventy::addAction('aksara.role.saving', function ($role) {
-
-            $capabilityAfter = $role->permissions ?? [];
-
-            $currentRole = \Plugins\User\Models\Role::find($role->id);
-            $currentCapability = $currentRole->permissions ?? [];
-
-            $removed = array_diff($currentCapability, $capabilityAfter);
-            foreach ($removed as $removeCapability) {
-                \CapabilityCache::flushCapability($removeCapability);
-            }
-
-            $added = array_diff($capabilityAfter, $currentCapability);
-            foreach ($added as $addedCapability) {
-                \CapabilityCache::flushCapability($addedCapability);
-            }
+        \Eventy::addAction('aksara.role.permission.saved', function ($permission) {
+            \CapabilityCache::flushCapability($permission->permission);
         });
 
-        \Eventy::addAction('aksara.role.deleting', function ($role) {
-            $currentRole = \Plugins\User\Models\Role::find($role->id);
-            $capabilities = $currentRole->permissions ?? [];
-            foreach ($capabilities as $capability) {
-                \CapabilityCache::flushCapability($capability);
-            }
+        \Eventy::addAction('aksara.role.permission.deleted', function ($permission) {
+            \CapabilityCache::flushCapability($permission->permission);
         });
     }
 }

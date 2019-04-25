@@ -92,8 +92,8 @@ class RoleController extends Controller
         $role->name = $data['name'];
         $context = @$data['context'] ?? 'master';
         $permissions = $data['permissions'] ?? [];
-        $role->permissions = $this->addContextSuffix($context, $permissions);
         $role->save();
+        $role->setPermissions($this->addContextSuffix($context, $permissions));
         admin_notice('success', __('user::messages.success_add_role'));
         return redirect()->route('aksara-role');
     }
@@ -160,9 +160,11 @@ class RoleController extends Controller
         $role->name = $data['name'];
         $permissions = @$data['permissions'] ?? [];
         $context = @$data['context'] ?? 'master';
-        $role->permissions = $this->updateContextPermissions(
-            $context, $this->addContextSuffix($context, $permissions), $role->permissions);
+        $oldPermissions = $role->permission_collection;
         $role->save();
+        $role->setPermissions($this->updateContextPermissions(
+            $context, $this->addContextSuffix($context, $permissions), $oldPermissions)
+        );
         admin_notice('success', __('user::messages.success_update_role'));
         return redirect()->route('aksara-role');
     }
@@ -177,7 +179,7 @@ class RoleController extends Controller
             }
         }
 
-        $newPermissions = array_merge($oldPermissions, $updatedPermissions);
+        $newPermissions = array_merge($oldPermissions->all(), $updatedPermissions);
         return $newPermissions;
     }
 

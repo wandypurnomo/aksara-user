@@ -39,7 +39,7 @@ class Interactor implements UserCapabilityInterface
         $roles = $user->roles;
         $hasPermission = false;
         foreach ($roles as $role) {
-            $permissions = $role->permissions;
+            $permissions = $role->permission_collection;
             foreach ($permissions as $permission) {
                 if ($this->strings->startsWith($permission, $context.'.')) {
                     $hasPermission = true;
@@ -65,8 +65,9 @@ class Interactor implements UserCapabilityInterface
         $capable = false;
 
         foreach ($user->roles as $role) {
-            $permissions = $role->permissions;
-            $hasPermission = in_array($capabilityKey, $permissions);
+            $permissions = $role->permission_collection;
+            $hasPermission = $permissions->contains($capabilityKey);
+            //$hasPermission = in_array($capabilityKey, $permissions);
             if ($hasPermission) {
                 $capability = $this->roleCapability->getWithContext($context, $capabilityId);
                 if ($capability['callback']) {

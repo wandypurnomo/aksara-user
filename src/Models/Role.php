@@ -4,15 +4,24 @@ namespace Plugins\User\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Plugins\User\Models\User;
-use Illuminate\Notifications\Notifiable;
 
 class Role extends Model
 {
-    use Notifiable;
-
     protected $table = 'roles';
-    protected $fillable = ['name', 'permissions'];
+    protected $fillable = ['name', ];
     public $timestamps = false;
+
+    public function permissions()
+    {
+        return $this->hasMany(RolePermission::class, 'role_id');
+    }
+
+    public function getPermissionCollectionAttribute($v)
+    {
+        if (!$this->permissions)
+            return collect([]);
+        return $this->permissions->map(function ($item) { return $item->permission; });
+    }
 
     public function validate($data, $except = null)
     {
@@ -23,12 +32,26 @@ class Role extends Model
         return \Validator::make($data, $rules);
     }
 
-    public function getPermissionsAttribute($value) {
-        return @unserialize($value);
-    }
+    /**
+     * @param $permissions permission array with context context.permission
+     */
+    public function setPermissions($value)
+    {
+        $newPermissions = collect($value)->diff($this->permission_collection);
+        $removedPermissions = $this->permission_collection->toBase()->diff($value);
 
-    public function setPermissionsAttribute($value) {
-        $this->attributes['permissions'] = @serialize($value);
+        $this->permissions()
+             ->whereIn('permission', $removedPermissions)
+             ->each(function ($model) { $model->delete(); });
+
+        $addedPermissions = $newPermissions->map(function ($item) {
+                 return [
+                     'permission' => $item,
+                 ];
+             });
+
+        $this->permissions()
+             ->createMany($addedPermissions->all());
     }
 
     public function user()
@@ -72,7 +95,7 @@ class Role extends Model
         if ($role)
         {
             // Checking value data to unserialize or change string data to array data
-            $data = unserialize($role->permissions);
+            $data = $role->permissions;
         } else {
             return FALSE;
         }
@@ -90,11 +113,11 @@ class Role extends Model
 
         // Get role data from db
         $role = Role::where('name', $name)->first();
-        $data = serialize($value);
+        $permissions = $value;
 
         $save = [
             'name' => $name,
-            'permissions' => $data,
+            'permissions' => $permissions,
 
         ];
 
@@ -109,7 +132,7 @@ class Role extends Model
             }
 
             // Checking value data
-            if ($data)
+            if ($permissions)
             {
                 $role->name = $save['name'];
                 $role->permissions = $save['permissions'];
@@ -137,6 +160,7 @@ class Role extends Model
             }
             $role->name = $save['name'];
             $role->permissions = $save['permissions'];
+
             if ($role->save())
                 return TRUE;
             else
@@ -159,6 +183,11 @@ class Role extends Model
 
         static::deleting(function ($model) {
             \Eventy::action('aksara.role.deleting', $model);
+
+            //cascade delete role permission
+            $model->permissions()->each(function ($item, $key) {
+                $item->delete();
+            });
         });
     }
 }

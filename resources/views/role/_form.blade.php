@@ -18,12 +18,12 @@
       <div class="col-md-4">
         <table class="table table-bordered roleTable">
           <tr>
-            <th class="no-sort selectbox bg-gray-light">{!! Form::checkbox('permissions[]', $id, (in_array($context.'.'.$id, $role->permissions)) ? true : false) !!}</th>
+            <th class="no-sort selectbox bg-gray-light">{!! Form::checkbox('permissions[]', $id, ($role->permission_collection->contains($context.'.'.$id)) ? true : false) !!}</th>
             <th class="no-sort bg-gray-light">{{ $args['name'] }}</th>
           </tr>
           @foreach ( $args['capabilities'] as $childId => $childArgs )
             <tr>
-              <td>{!! Form::checkbox('permissions[]', $childId , (in_array($context.'.'.$childId, $role->permissions)) ? true : false, ['class'=>'dt-check']) !!}</td>
+              <td>{!! Form::checkbox('permissions[]', $childId , ($role->permission_collection->contains($context.'.'.$childId)) ? true : false, ['class'=>'dt-check']) !!}</td>
               <td>{{ $childArgs['name'] }}</td>
             </tr>
           @endforeach
@@ -31,9 +31,5 @@
       </div>
     @endforeach
   </div>
-
-
-
 </div>
-
 
