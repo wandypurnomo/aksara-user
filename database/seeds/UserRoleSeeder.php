@@ -3,6 +3,8 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
+use Plugins\User\Models\Role;
+
 class UserRoleSeeder extends Seeder
 {
     /**
@@ -15,30 +17,41 @@ class UserRoleSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Model::unguard();
 
-        Plugins\User\Models\Role::truncate();
+        //get or create default role by name Admin User
+        $adminRole = Role::firstOrCreate([ 'name' => 'Admin User' ]);
 
-        $role = Plugins\User\Models\Role::create([
-            'name' => 'Admin User',
-            'permissions' => [
-                //manage user
-                'master.list-user',
-                'master.add-user',
-                'master.edit-user',
-                'master.delete-user',
-                'master.add-user-role',
-                'master.remove-user-role',
+        $permissions = [
+            //manage user
+            'master.user',
+            'master.list-user',
+            'master.add-user',
+            'master.edit-user',
+            'master.delete-user',
+            'master.add-user-role',
+            'master.remove-user-role',
 
-                //manage role
-                'master.list-role',
-                'master.add-role',
-                'master.edit-role',
-                'master.delete-role',
+            //manage role
+            'master.role',
+            'master.list-role',
+            'master.add-role',
+            'master.edit-role',
+            'master.delete-role',
 
-                // module manager
-                'master.module-manager',
-                'master.manage-modules',
-            ],
-        ]);
+            // module manager
+            'master.module-manager',
+            'master.manage-modules',
+        ];
+
+        $permissionDatas = collect($permissions)->map(function ($item) {
+            return [
+                'permission' => $item,
+            ];
+        })->all();
+
+        foreach ($permissionDatas as $permissionData) {
+            $adminRole->permissions()
+                      ->updateOrCreate($permissionData, []);
+        }
 
         $adminEmail = 'admin@gmail.com';
 
@@ -50,7 +63,10 @@ class UserRoleSeeder extends Seeder
             throw new \Exception("Admin user not found with email $adminEmail");
         }
 
-        $user->roles()->attach($role);
+        //if already attached then just skip it
+        if (!$user->roles->contains($adminRole)) {
+            $user->roles()->attach($adminRole);
+        }
 
         Model::reguard();
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
