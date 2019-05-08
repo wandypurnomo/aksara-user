@@ -33,18 +33,20 @@ class User extends Authenticatable
 
     public function validate($data)
     {
-        if ($this->id) {
+        $id = $this->id ?? null;
+
+        if ($id != null) {
             if (isset($data['password']) || isset($data['password_confirmation']))
                 $rules = [
                     'name' => 'required|string',
-                    'email' => 'required|email|unique:users' . ($this->id ? ",id,$this->id" : ''),
+                    'email' => 'required|email|unique:users,email,' . $id,
                     'password' => 'required|confirmed',
                     'password_confirmation' => 'required'
                 ];
             else
                 $rules = [
                     'name' => 'required|string',
-                    'email' => 'required|email|unique:users' . ($this->id ? ",id,$this->id" : ''),
+                    'email' => 'required|email|unique:users,email,' . $id,
                 ];
         } else {
             $rules = [
