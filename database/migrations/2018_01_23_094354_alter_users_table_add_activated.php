@@ -14,7 +14,8 @@ class AlterUsersTableAddActivated extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('activated')->default(false);
+            $table->boolean('activated')->default(0);
+            $table->boolean("is_admin_active")->default(1);
         });
     }
 
@@ -27,6 +28,7 @@ class AlterUsersTableAddActivated extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('activated');
+            $table->dropColumn('is_admin_active');
         });
     }
 }
